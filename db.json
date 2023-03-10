@@ -1,0 +1,62 @@
+{
+  "buckets": [
+    {
+      "name": "Entertainment Movies",
+      "id": 1
+    },
+    {
+      "name": "Entertainment Songs",
+      "id": 2
+    },
+    {
+      "name": "Comedy Movies",
+      "id": 3
+    },
+    {
+      "name": "Comedy Cool Movies",
+      "id": 4
+    },
+    {
+      "name": "Comedy Sketches",
+      "id": 5
+    },
+    {
+      "name": "Comedy Cool Movies 123",
+      "id": 6
+    },
+    {
+      "name": "Huehue",
+      "id": 10
+    },
+    {
+      "name": "Test Buck",
+      "id": 11
+    }
+  ],
+  "files": [
+    {
+      "name": "Cat Video",
+      "link": "https://www.youtube.com/embed/cJZKEklZhdM",
+      "id": 1,
+      "bucket_id": 1
+    },
+    {
+      "name": "Cat Video 2",
+      "link": "https://www.youtube.com/embed/cJZKEklZhdM",
+      "id": 2,
+      "bucket_id": 2
+    },
+    {
+      "name": "Cat Video X",
+      "link": "https://www.youtube.com/embed/cJZKEklZhdM",
+      "id": 3,
+      "bucket_id": 1
+    },
+    {
+      "name": "Test Data",
+      "link": "https://www.youtube.com/watch?v=cJZKEklZhdM",
+      "bucket_id": 1,
+      "id": 4
+    }
+  ]
+}

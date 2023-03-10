@@ -1,12 +1,14 @@
-import React from "react";
-import InputForm from "./components/Base/Form/InputForm";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Landing from "./components/Main/Landing/Landing";
 
 const App = () => {
   return (
-    <div className="app">
-      <h1>App</h1>
-      <InputForm />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/" element={<Landing />} />
+        <Route path="*" element={<div>404</div>} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 
