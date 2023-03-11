@@ -1,7 +1,7 @@
 // Import SCSS variables
-@import './assets/scss/variables';
-@import './components/Base/base';
-@import './components/Main/main';
+@use './assets/scss/variables';
+@use './components/Base/base';
+@use './components/Main/main';
 // Import Tailwind base and components
 @tailwind base;
 @tailwind components;

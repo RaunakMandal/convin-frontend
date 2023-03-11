@@ -1,2 +1,2 @@
-@import './landing/_landing.scss';
-@import './bucket/_bucket.scss';
+@use './landing/landing';
+@use './bucket/bucket';
