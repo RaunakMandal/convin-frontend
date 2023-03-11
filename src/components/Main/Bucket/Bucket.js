@@ -1,11 +1,12 @@
 import {
+  ArrowRightOutlined,
   CheckCircleOutlined,
   CloseOutlined,
   DeleteOutlined,
   EditOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Checkbox, Input, Modal } from "antd";
+import { Button, Card, Checkbox, Input, Modal, Popover, Select } from "antd";
 import React, { useEffect, useState } from "react";
 import Iframe from "react-iframe";
 
@@ -18,6 +19,15 @@ const Bucket = ({ bucket }) => {
   const [fileLink, setFileLink] = useState("");
   const [editing, setEditing] = useState(false);
   const [bucketName, setBucketName] = useState(bucket.name || "");
+  const [buckets, setBuckets] = useState(
+    JSON.parse(localStorage.getItem("buckets")) || []
+  );
+  const [bucketId, setBucketId] = useState("");
+  const [file, setFile] = useState({
+    name: "",
+    link: "",
+    bucket_id: bucket.id,
+  });
 
   const handleSelect = (e, id) => {
     const { checked } = e.target;
@@ -40,8 +50,12 @@ const Bucket = ({ bucket }) => {
       });
   };
 
-  const openMenu = () => {
-    console.log("Open Edit");
+  const handleFileChange = (e) => {
+    const { name, value } = e.target;
+    setFile({
+      ...file,
+      [name]: value,
+    });
   };
 
   const deleteFiles = async () => {
@@ -85,6 +99,50 @@ const Bucket = ({ bucket }) => {
 
   const closeModal = () => {
     setIsModalOpen(false);
+  };
+
+  const changeBucket = async (file) => {
+    await fetch(`http://localhost:8080/files/${file.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: file.name,
+        link: file.link,
+        bucket_id: bucketId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const editFile = async (id) => {
+    await fetch(`http://localhost:8080/files/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: file.name,
+        link: file.link,
+        bucket_id: file.bucket_id,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        fetchBucketData(bucket.id);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   useEffect(() => {
@@ -170,11 +228,66 @@ const Bucket = ({ bucket }) => {
                 </span>
               </span>
               <span className="flex">
-                <RightCircleOutlined className="icon-move cursor-pointer" />
-                <EditOutlined
-                  className="icon-edit cursor-pointer"
-                  onClick={openMenu}
-                />
+                <Popover
+                  content={
+                    <>
+                      <div className="flex items-center gap-1">
+                        <Input value={bucket.name} disabled />
+                        <ArrowRightOutlined />
+                        <Select
+                          onChange={(e) => setBucketId(e)}
+                          defaultValue={bucket.name}
+                        >
+                          {buckets.map((bucket) => (
+                            <Select.Option value={bucket.id}>
+                              {bucket.name}
+                            </Select.Option>
+                          ))}
+                        </Select>
+                        <Button
+                          type="primary"
+                          danger
+                          onClick={(e) => changeBucket(file)}
+                        >
+                          Move
+                        </Button>
+                      </div>
+                    </>
+                  }
+                  title="Move to another bucket"
+                  trigger="click"
+                >
+                  <RightCircleOutlined className="icon-move cursor-pointer" />
+                </Popover>
+                <Popover
+                  content={
+                    <>
+                      <div className="flex flex-col items-center gap-1">
+                        <Input
+                          placeholder="New File Name..."
+                          name="name"
+                          onChange={(e) => handleFileChange(e)}
+                        />
+                        <Input
+                          placeholder="New File Link..."
+                          name="link"
+                          onChange={(e) => handleFileChange(e)}
+                        />
+                        <Button
+                          type="primary"
+                          danger
+                          onClick={(e) => editFile(file.id)}
+                        >
+                          Update
+                        </Button>
+                      </div>
+                    </>
+                  }
+                  title="Edit Bucket"
+                  trigger="click"
+                >
+                  <EditOutlined className="icon-edit cursor-pointer" />
+                </Popover>
               </span>
             </div>
           ))}

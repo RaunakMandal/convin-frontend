@@ -19,8 +19,6 @@ const Navbar = () => {
     type: "",
   });
 
-  const [loading, setLoading] = useState(false);
-
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
@@ -56,7 +54,7 @@ const Navbar = () => {
 
   const selectAfter = (
     <Select
-      defaultValue="Select"
+      defaultValue="Select Bucket"
       onChange={(e) => {
         setFile({
           ...file,
@@ -64,16 +62,15 @@ const Navbar = () => {
         });
       }}
     >
-      {buckets.map((bucket) => (
+      {buckets?.map((bucket) => (
         <Select.Option key={bucket.id} value={bucket.id}>
-          {bucket.id}
+          {bucket.name}
         </Select.Option>
       ))}
     </Select>
   );
 
   const addBucket = async () => {
-    setLoading(true);
     console.log("Add Bucket", bucket);
     await fetch("http://localhost:8080/buckets", {
       method: "POST",
@@ -85,7 +82,6 @@ const Navbar = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setLoading(false);
         setIsModalOpen({
           open: false,
           type: "",
@@ -97,7 +93,6 @@ const Navbar = () => {
   };
 
   const addFile = async () => {
-    setLoading(true);
     console.log("Add File", file);
     await fetch("http://localhost:8080/files", {
       method: "POST",
@@ -109,7 +104,6 @@ const Navbar = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setLoading(false);
         setIsModalOpen({
           open: false,
           type: "",
@@ -127,6 +121,7 @@ const Navbar = () => {
       fetch("http://localhost:8080/buckets")
         .then((res) => res.json())
         .then((data) => {
+          localStorage.setItem("buckets", JSON.stringify(data));
           setBuckets(data);
         })
         .catch((err) => {
@@ -219,7 +214,7 @@ const Navbar = () => {
                   },
                 ]}
               >
-                <Input addonAfter={selectAfter} value={file.bucket_id} />
+                <Input addonAfter={selectAfter} value={file.id} />
               </Form.Item>
             </>
           )}
