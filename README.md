@@ -5,17 +5,21 @@ This Webapp allows you to create new Buckets, Add Embed Links to them, Play the 
 
 ## How to Run?
 ### Local:
-#### 1. Install Dependencies for Frontend
+#### 1. Clone the Repo
+    git clone https://github.com/RaunakMandal/convin-frontend.git
+#### 2. Install Dependencies for Frontend
     npm install
 
-#### 2. Install JSON Server
+#### 3. Install JSON Server
     npm install -g json-server
-#### 3. Run the JSON Server in the same directory
+#### 4. Run the JSON Server in the same directory
     json-server --watch db.json --port=8080
-#### 4. Run the App
+#### 5. Run the App
     npm start
 
 You can now head over to http://localhost:3000 and use the app. 
 
 ### Deployed App:
 You can visit https://incredible-zuccutto-172086.netlify.app to use the app.
+
+Note: Looks like the json-server does not work directly with Netlify. So, please use the Local build to run the app with all functionalities. :)
