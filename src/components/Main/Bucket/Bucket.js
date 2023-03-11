@@ -88,12 +88,19 @@ const Bucket = ({ bucket }) => {
       });
   };
 
-  const openPlayerModal = (link) => {
+  const openPlayerModal = (file) => {
     setIsModalOpen(true);
-    setFileLink(link);
+    setFileLink(file.link);
 
     const history = JSON.parse(localStorage.getItem("history")) || [];
-    const newHistory = [...history, link];
+    const newHistory = [
+      ...history,
+      {
+        name: file.name,
+        link: file.link,
+        last_watched: new Date().toString(),
+      },
+    ];
     localStorage.setItem("history", JSON.stringify(newHistory));
   };
 
@@ -206,7 +213,7 @@ const Bucket = ({ bucket }) => {
           </>
         }
       >
-        {files.length &&
+        {files.length > 0 &&
           files?.map((file) => (
             <div
               key={file.id}
@@ -219,7 +226,7 @@ const Bucket = ({ bucket }) => {
                 />
                 <span
                   className="flex flex-col cursor-pointer file-item"
-                  onClick={(e) => openPlayerModal(file.link)}
+                  onClick={(e) => openPlayerModal(file)}
                 >
                   <span className="text-sm font-bold bucket-text">
                     {file.name}
@@ -239,7 +246,7 @@ const Bucket = ({ bucket }) => {
                           defaultValue={bucket.name}
                         >
                           {buckets.map((bucket) => (
-                            <Select.Option value={bucket.id}>
+                            <Select.Option value={bucket.id} key={bucket.id}>
                               {bucket.name}
                             </Select.Option>
                           ))}
@@ -283,7 +290,7 @@ const Bucket = ({ bucket }) => {
                       </div>
                     </>
                   }
-                  title="Edit Bucket"
+                  title="Edit File"
                   trigger="click"
                 >
                   <EditOutlined className="icon-edit cursor-pointer" />
@@ -291,7 +298,7 @@ const Bucket = ({ bucket }) => {
               </span>
             </div>
           ))}
-        {!files.length && <p>No files in this bucket</p>}
+        {files.length === 0 && <p>No files in this bucket</p>}
       </Card>
       <Modal
         title="Player"

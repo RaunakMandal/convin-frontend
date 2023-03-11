@@ -1,6 +1,9 @@
 .item-list {
-    border: 1px solid $border-color;
+border: 1px solid $border-color;
     border-radius: 4px;
+&:hover {
+        box-shadow: $box-shadow;
+    }
 }
 
 .icon-delete,
@@ -8,15 +11,15 @@
 .icon-move,
 .icon-save,
 .icon-close {
-    padding: 6px;
+padding: 6px;
     border-radius: 4px;
 
-    &:hover {
+&:hover {
         background-color: $icon-bg-hover;
     }
 }
 
 .bucket-text,
 .bucket-link-text {
-    word-break: break-word;
+word-break: break-word;
 }

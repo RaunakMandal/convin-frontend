@@ -1,5 +1,6 @@
 .card {
-    border: 1px solid red;
+    border: 1px solid $border-color;
+        box-shadow: $box-shadow;
 }
 
 .ant-card-body {

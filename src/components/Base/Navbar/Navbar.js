@@ -52,24 +52,6 @@ const Navbar = () => {
     }
   };
 
-  const selectAfter = (
-    <Select
-      defaultValue="Select Bucket"
-      onChange={(e) => {
-        setFile({
-          ...file,
-          bucket_id: e,
-        });
-      }}
-    >
-      {buckets?.map((bucket) => (
-        <Select.Option key={bucket.id} value={bucket.id}>
-          {bucket.name}
-        </Select.Option>
-      ))}
-    </Select>
-  );
-
   const addBucket = async () => {
     console.log("Add Bucket", bucket);
     await fetch("http://localhost:8080/buckets", {
@@ -89,6 +71,12 @@ const Navbar = () => {
         setBucket({
           name: "",
         });
+        /**
+         * HACK ALERT: This is not a good practice to reload the page, but
+         * I am doing this because I am not using any state management library
+         * like Redux.
+         */
+        window.location.reload();
       });
   };
 
@@ -113,6 +101,12 @@ const Navbar = () => {
           link: "",
           bucket_id: "",
         });
+        /**
+         * HACK ALERT: This is not a good practice to reload the page, but
+         * I am doing this because I am not using any state management library
+         * like Redux.
+         */
+        window.location.reload();
       });
   };
 
@@ -206,7 +200,7 @@ const Navbar = () => {
                 <Input name="link" onChange={(e) => handleChanges(e)} />
               </Form.Item>
               <Form.Item
-                label="Bucket ID"
+                label="Bucket"
                 rules={[
                   {
                     required: true,
@@ -214,7 +208,21 @@ const Navbar = () => {
                   },
                 ]}
               >
-                <Input addonAfter={selectAfter} value={file.id} />
+                <Select
+                  defaultValue="Select Bucket"
+                  onChange={(e) => {
+                    setFile({
+                      ...file,
+                      bucket_id: e,
+                    });
+                  }}
+                >
+                  {buckets?.map((bucket) => (
+                    <Select.Option key={bucket.id} value={bucket.id}>
+                      {bucket.name}
+                    </Select.Option>
+                  ))}
+                </Select>
               </Form.Item>
             </>
           )}

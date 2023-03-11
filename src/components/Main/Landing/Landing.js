@@ -22,11 +22,17 @@ const Landing = () => {
   return (
     <Home>
       <div className="flex flex-row flex-wrap p-4">
-        {buckets?.map((bucket) => (
-          <div className="flex m-4" key={bucket.id}>
-            <Bucket bucket={bucket} />
-          </div>
-        ))}
+        {buckets?.length > 0 &&
+          buckets?.map((bucket) => (
+            <div className="flex m-4" key={bucket.id}>
+              <Bucket bucket={bucket} />
+            </div>
+          ))}
+        {buckets?.length === 0 && (
+          <span className="text-lg font-bold text-center">
+            No Buckets. Add one?
+          </span>
+        )}
       </div>
     </Home>
   );

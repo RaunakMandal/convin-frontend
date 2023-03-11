@@ -1,54 +1,24 @@
 {
   "buckets": [
     {
-      "name": "Lol Lol 1234",
+      "name": "Testing Bucket 1",
       "id": 1
     },
     {
-      "name": "Entertainment Songs2",
+      "name": "Testing Bucket 2",
       "id": 2
-    },
-    {
-      "name": "Comedy Movies",
-      "id": 3
-    },
-    {
-      "name": "Comedy Cool Movies",
-      "id": 4
-    },
-    {
-      "name": "Comedy Sketches",
-      "id": 5
-    },
-    {
-      "name": "Comedy Cool Movies 123",
-      "id": 6
-    },
-    {
-      "name": "Huehue",
-      "id": 10
-    },
-    {
-      "name": "Test Buck",
-      "id": 11
-    },
-    {
-      "name": "Test 123",
-      "id": 12
-    },
-    {
-      "name": "Huehue",
-      "id": 13
-    },
-    {
-      "name": "Test Bucketttttt",
-      "id": 14
     }
   ],
   "files": [
     {
       "name": "Test File",
-      "link": "https://aws.amazon.com/s3/",
+      "link": "https://www.youtube.com/embed/uNzFI75hTTc",
+      "bucket_id": 2,
+      "id": 1
+    },
+    {
+      "name": "Test MP3",
+      "link": "https://wynk.in/u/GNNO9sV4Q",
       "bucket_id": 1,
       "id": 2
     }

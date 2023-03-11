@@ -5,20 +5,28 @@ const History = () => {
   const [history, setHistory] = useState([]);
 
   useEffect(() => {
-    const hist = localStorage.getItem("history");
-    setHistory(JSON.parse(hist));
+    const hist = JSON.parse(localStorage.getItem("history")) || [];
+    setHistory(hist);
   }, []);
 
   return (
     <Home>
-      <div className="flex flex-row flex-wrap p-4">
-        {history?.map((history) => (
-          <div className="flex m-4" key={history.id}>
-            <div>
-              <h1>{history}</h1>
+      <div className="flex flex-col items-center p-4 m-4">
+        <span className="text-2xl font-bold">History</span>
+        {history?.length > 0 &&
+          history?.map((history) => (
+            <div
+              className="flex flex-col history-item m-2 p-2 w-1/2"
+              key={history.last_watched}
+            >
+              <span className="text-lg font-bold">{history.name}</span>
+              <span className="text-sm">{history.link}</span>
+              <span className="text-sm">{history.last_watched}</span>
             </div>
-          </div>
-        ))}
+          ))}
+        {history?.length === 0 && (
+          <span className="text-lg font-bold">No History</span>
+        )}
       </div>
     </Home>
   );
