@@ -16,9 +16,7 @@ const Landing = () => {
   };
 
   useEffect(() => {
-    if (buckets.length === 0) {
-      fetchBuckets();
-    }
+    fetchBuckets();
   }, []);
 
   return (

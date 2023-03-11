@@ -1,9 +1,11 @@
 import {
+  CheckCircleOutlined,
+  CloseOutlined,
   DeleteOutlined,
   EditOutlined,
   RightCircleOutlined,
 } from "@ant-design/icons";
-import { Card, Checkbox, Modal } from "antd";
+import { Card, Checkbox, Input, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import Iframe from "react-iframe";
 
@@ -14,6 +16,8 @@ const Bucket = ({ bucket }) => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [fileLink, setFileLink] = useState("");
+  const [editing, setEditing] = useState(false);
+  const [bucketName, setBucketName] = useState(bucket.name || "");
 
   const handleSelect = (e, id) => {
     const { checked } = e.target;
@@ -40,14 +44,43 @@ const Bucket = ({ bucket }) => {
     console.log("Open Edit");
   };
 
-  const deleteFiles = () => {
-    console.log("Delete Files");
+  const deleteFiles = async () => {
+    console.log("Delete Files", selectedFiles);
+    for (const file of selectedFiles) {
+      await fetch(`http://localhost:8080/files/${file}`, {
+        method: "DELETE",
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          fetchBucketData(bucket.id);
+        });
+    }
+  };
+
+  const editBucket = async () => {
+    await fetch(`http://localhost:8080/buckets/${bucket.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: bucketName,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setEditing(false);
+      });
   };
 
   const openPlayerModal = (link) => {
-    console.log("Open Player Modal");
     setIsModalOpen(true);
     setFileLink(link);
+
+    const history = JSON.parse(localStorage.getItem("history")) || [];
+    const newHistory = [...history, link];
+    localStorage.setItem("history", JSON.stringify(newHistory));
   };
 
   const closeModal = () => {
@@ -69,26 +102,57 @@ const Bucket = ({ bucket }) => {
   return (
     <>
       <Card
-        title={`${bucket.name} - ${bucket.id}`}
+        title={
+          <span className="flex flex-col items-start justify-center w-11/12">
+            {editing ? (
+              <Input
+                name="name"
+                value={bucketName}
+                onChange={(e) => setBucketName(e.target.value)}
+              />
+            ) : (
+              <span className="text-lg font-bold">{bucketName}</span>
+            )}
+          </span>
+        }
         bordered={false}
         style={{
           width: 300,
         }}
         className="card"
         extra={
-          showDelete && (
-            <DeleteOutlined
-              className="icon-delete cursor-pointer"
-              onClick={deleteFiles}
-            />
-          )
+          <>
+            {editing ? (
+              <>
+                <CheckCircleOutlined
+                  className="icon-save cursor-pointer"
+                  onClick={editBucket}
+                />
+                <CloseOutlined
+                  className="icon-close cursor-pointer"
+                  onClick={(e) => setEditing(!editing)}
+                />
+              </>
+            ) : (
+              <EditOutlined
+                className="icon-edit cursor-pointer"
+                onClick={(e) => setEditing(!editing)}
+              />
+            )}
+            {showDelete && (
+              <DeleteOutlined
+                className="icon-delete cursor-pointer"
+                onClick={deleteFiles}
+              />
+            )}
+          </>
         }
       >
         {files.length &&
           files?.map((file) => (
             <div
               key={file.id}
-              className="p-4 my-2 flex flex-row items-center item-list"
+              className="p-4 my-2 flex flex-row items-center justify-between item-list"
             >
               <span className="flex">
                 <Checkbox
@@ -121,6 +185,7 @@ const Bucket = ({ bucket }) => {
         open={isModalOpen}
         onCancel={closeModal}
         footer={null}
+        destroyOnClose={true}
       >
         <Iframe
           url={`${fileLink}?autoplay=1`}

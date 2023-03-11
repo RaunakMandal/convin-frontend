@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, Input, Select } from "antd";
 import Modal from "antd/es/modal/Modal";
 import { Link } from "react-router-dom";
-import { Option } from "antd/es/mentions";
 
 const Navbar = () => {
   const [buckets, setBuckets] = useState([]);
@@ -66,7 +65,9 @@ const Navbar = () => {
       }}
     >
       {buckets.map((bucket) => (
-        <Select.Option value={bucket.id}>{bucket.id}</Select.Option>
+        <Select.Option key={bucket.id} value={bucket.id}>
+          {bucket.id}
+        </Select.Option>
       ))}
     </Select>
   );
@@ -85,6 +86,10 @@ const Navbar = () => {
       .then((data) => {
         console.log(data);
         setLoading(false);
+        setIsModalOpen({
+          open: false,
+          type: "",
+        });
         setBucket({
           name: "",
         });
@@ -105,6 +110,10 @@ const Navbar = () => {
       .then((data) => {
         console.log(data);
         setLoading(false);
+        setIsModalOpen({
+          open: false,
+          type: "",
+        });
         setFile({
           name: "",
           link: "",
@@ -153,6 +162,7 @@ const Navbar = () => {
         }
         open={isModalOpen.open}
         onCancel={handleCancel}
+        destroyOnClose={true}
         footer={[
           <Button key="back" onClick={handleCancel}>
             Cancel

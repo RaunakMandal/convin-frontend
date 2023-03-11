@@ -1,7 +1,7 @@
 {
   "buckets": [
     {
-      "name": "Entertainment Movies",
+      "name": "Lol Lol 1234",
       "id": 1
     },
     {
@@ -31,32 +31,22 @@
     {
       "name": "Test Buck",
       "id": 11
+    },
+    {
+      "name": "Test 123",
+      "id": 12
+    },
+    {
+      "name": "Huehue",
+      "id": 13
     }
   ],
   "files": [
     {
-      "name": "Cat Video",
-      "link": "https://www.youtube.com/embed/cJZKEklZhdM",
-      "id": 1,
-      "bucket_id": 1
-    },
-    {
-      "name": "Cat Video 2",
-      "link": "https://www.youtube.com/embed/cJZKEklZhdM",
-      "id": 2,
-      "bucket_id": 2
-    },
-    {
-      "name": "Cat Video X",
-      "link": "https://www.youtube.com/embed/cJZKEklZhdM",
-      "id": 3,
-      "bucket_id": 1
-    },
-    {
-      "name": "Test Data",
-      "link": "https://www.youtube.com/watch?v=cJZKEklZhdM",
+      "name": "Test File",
+      "link": "124",
       "bucket_id": 1,
-      "id": 4
+      "id": 1
     }
   ]
 }
