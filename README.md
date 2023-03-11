@@ -22,4 +22,7 @@ You can now head over to http://localhost:3000 and use the app.
 ### Deployed App:
 You can visit https://incredible-zuccutto-172086.netlify.app to use the app.
 
+### Screen Recording of the App
+https://www.loom.com/share/40ee7ac4a18f45e6a46eaa36d8def3e8
+
 Note: Looks like the json-server does not work directly with Netlify. So, please use the Local build to run the app with all functionalities. :)
